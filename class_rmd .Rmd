@@ -1,0 +1,75 @@
+---
+title: "class_11_7_19"
+author: "Jeremy Ornstein"
+date: "11/7/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(babynames)
+library(tidyverse)
+library(readxl)
+```
+
+```{r}
+last <- babynames %>% arrange(desc(year)) %>% select(year) %>% head(1)
+first <-  babynames %>% arrange(year) %>% select(year) %>% head(1)
+(last - first) + 1
+```
+
+```{r}
+babynames %>%
+  distinct(name) %>%
+  nrow()
+```
+
+```{r}
+# Most common baby names 
+babynames %>%
+  group_by(name) %>%
+  summarise(total = n()) %>%
+arrange(desc(total))
+
+
+babynames %>%
+  filter(name == "Francis") %>% 
+  summarise(total = n())
+
+babynames_filtered <- babynames %>% filter(name == "James")
+
+babynames %>%
+  filter(name == "Jeremy") %>%
+  filter(sex == "M") %>%
+  ggplot(aes(x = year, y= n)) + 
+  geom_point()
+
+all_male_names <- babynames %>%
+  filter(sex == "M") %>%
+group_by(name) %>%
+  summarise(total = n()) %>%
+  filter(total == 138) %>%
+  pluck("name")
+
+# restrict baby names to all male names, create a model regression line
+one_name <- babynames %>%
+  filter(name == "Adolf") 
+lm.obj <- lm(data = one_name, prop ~ year) 
+ggplot(lm.obj, aes(year, prop)) +
+  geom_smooth()
+
+babynames %>%
+  filter(name %in% all_male_names)
+  filter(sex == "M") %>%
+group_by(name) %>%
+  nest() %>%
+    mutate(models = map(data, ~lm(prop ~ year, data = .x))) %>% 
+    mutate(coefficients = mapply(function, ...)
+
+
+  
+```
+
