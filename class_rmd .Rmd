@@ -55,19 +55,19 @@ group_by(name) %>%
   pluck("name")
 
 # restrict baby names to all male names, create a model regression line
-one_name <- babynames %>%
-  filter(name == "Adolf") 
+babynames %>%
+  filter(name == "Jeremy") 
 lm.obj <- lm(data = one_name, prop ~ year) 
 ggplot(lm.obj, aes(year, prop)) +
   geom_smooth()
 
-babynames %>%
-  filter(name %in% all_male_names)
-  filter(sex == "M") %>%
-group_by(name) %>%
-  nest() %>%
-    mutate(models = map(data, ~lm(prop ~ year, data = .x))) %>% 
-    mutate(coefficients = mapply(function, ...)
+# babynames %>%
+  # filter(name %in% all_male_names)
+ #  filter(sex == "M") %>%
+# group_by(name) %>%
+  # nest() %>%
+  #  mutate(models = map(data, ~lm(prop ~ year, data = .x))) %>% 
+   # mutate(coefficients = mapply(function, ...)
 
 
   
